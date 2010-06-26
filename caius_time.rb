@@ -3,14 +3,16 @@ require "nokogiri"
 require "open-uri"
 require "timeout"
 require "core_extends"
-require "pathname"
+#require "pathname"
 
 class CaiusTime
-  attr_accessor :offset, :time, :diff, :settings
+  attr_accessor :offset, :time, :diff#, :settings
 
+=begin
   def initialize params={}
     self.settings = params[:settings]
   end
+=end
 
   def times_for_page page=1
     doc = Nokogiri::XML.parse(open("http://api.twitter.com/1/statuses/user_timeline.xml?screen_name=caius&page=#{page}"))
@@ -19,6 +21,7 @@ class CaiusTime
     end
   end
 
+=begin
   def cache_file
     @cache_file ||= (Pathname.new(settings.root) + "tmp/#{Date.today.to_s}.txt")
   end
@@ -34,6 +37,7 @@ class CaiusTime
     p "cache hit"
     Time.parse(str)
   end
+=end
 
   def parse_tweet_time
     Timeout.timeout(5) do
@@ -56,15 +60,17 @@ class CaiusTime
   end
 
   def fetch_tweet_time
-    p "cache miss"
+ #   p "cache miss"
     the_time = parse_tweet_time
+    p "Twitter time: #{the_time}"
     # Write it out to cache it
-    File.open(cache_file.to_s, "w") { |f| f.write(the_time) }
+#    File.open(cache_file.to_s, "w") { |f| f.write(the_time) }
     the_time
   end
 
   def tweet_time
-    cached_tweet_time || fetch_tweet_time
+    # cached_tweet_time || fetch_tweet_time
+    fetch_tweet_time
   rescue Exception => e #Timeout::Error
     p "Error: #{e.message}"
     nil

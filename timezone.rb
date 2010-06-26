@@ -9,7 +9,7 @@ helpers do
 end
 
 get "/" do
-  @ct = CaiusTime.new(:settings => settings)
+  @ct = CaiusTime.new#(:settings => settings)
   @ct.run!
   erb :index
 end
