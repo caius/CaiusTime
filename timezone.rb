@@ -82,16 +82,16 @@ __END__
 <dl>
   <dt>Why?</dt>
   <dd>
-    <a href="http://caius.name/">Caius</a> doesn't stay on the UK timezone all that well, and is usually off by a couple of hours. He's been as bad as GMT-1300 before now!
+    <a href="http://caius.name/">Caius</a> doesn't stay on the UK timezone all that well, and is usually off by a couple of hours. He's been as bad as 13 hours behind before now!
   </dd>
 
   <dt>How?</dt>
   <dd>
-    Finds my earliest tweet of the current day and work out the offset from that to 9am (start of <em>typical</em> working day) to within the nearest hour.
+    Finds my earliest tweet of the current day and works out the difference from that to 9am (start of standard working day) to within the nearest hour.
   </dd>
 
   <dt>A Myth?</dt>
-  <dd>It's a myth if we can't work it out for some reason. It's quite likely he is just asleep and hasn't woken up yet today, lazy bastard that he is.</dd>
+  <dd>It's a myth if we can't work it out for some reason. It's quite likely he is just asleep and hasn't woken up yet today, being the lazy bastard that he is.</dd>
 </dl>
 
 @@ time
