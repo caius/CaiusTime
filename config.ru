@@ -1,12 +1,16 @@
 #!/usr/bin/env rackup
-require File.dirname(__FILE__) + "/timezone"
+require 'rubygems'
+require 'sinatra'
 
-set :run, false
-set :environment, :production
+Sinatra::Application.default_options.merge!(
+  :run => false,
+  :env => :production
+)
 
 log = File.new("log/production.log", "a+")
 STDOUT.reopen(log)
 STDERR.reopen(log)
 
 
-run Sinatra::Application
+require File.dirname(__FILE__) + "/timezone"
+run Sinatra.application
