@@ -78,7 +78,7 @@ class CaiusTime
     diff = ((@time - Time.normal)/60).to_i
 
     # Store our values for later
-    self.offset = offset_from((diff*-1)+60)
+    self.offset = offset_from((diff*-1))
     self.time = Time.parse(Time.now.strftime("%Y-%m-%d %H:%M #{offset_from(diff+60)}"))
     self.diff = (Time.now - self.time).to_i/60/60
   end
