@@ -1,9 +1,13 @@
-require "active_support/all"
+require "active_support/core_ext/string/conversions"
+require "active_support/core_ext/integer/time"
+require "active_support/core_ext/numeric/time"
+require "active_support/core_ext/object/blank"
 require "nokogiri"
 require "open-uri"
 require "timeout"
 require "core_extends"
 require "pathname"
+require "time"
 
 class CaiusTime
   attr_accessor :offset, :time, :diff, :settings
