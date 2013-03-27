@@ -54,6 +54,7 @@ namespace :deploy do
 
   task :link_cache_dir do
     run <<-CMD
+      rm -rf #{shared_path}/cache &&
       mkdir -p #{shared_path}/cache &&
       ln -sf #{shared_path}/cache #{latest_release}/cache
     CMD

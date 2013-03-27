@@ -20,7 +20,7 @@ class CaiusTime
   end
 
   def cache_file
-    @cache_file ||= (Pathname.new(settings.root) + "tmp/#{Date.today.to_s}.txt")
+    @cache_file ||= (Pathname.new(settings.root) + "cache/#{Date.today.to_s}.txt")
   end
 
   def cached_tweet_time
