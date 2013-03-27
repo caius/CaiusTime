@@ -1,5 +1,6 @@
 #!/usr/bin/env rackup
-require File.dirname(__FILE__) + "/timezone"
+$:.unshift File.dirname(__FILE__) + "/lib"
+require "timezone"
 
 set :run, false
 set :environment, :production
