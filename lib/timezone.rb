@@ -1,6 +1,6 @@
-require "rubygems"
-require "sinatra"
 require "caius_time"
+
+enable :inline_templates
 
 helpers do
   def pluralize amount, string
@@ -13,7 +13,6 @@ get "/" do
   @ct.run!
   erb :index
 end
-
 
 __END__
 @@ layout
