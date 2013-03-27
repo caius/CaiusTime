@@ -1,10 +1,11 @@
 # Generated with 'brightbox' on Sat Jun 26 00:43:34 +0100 2010
 load 'deploy' if respond_to?(:namespace) # cap2 differentiator
 
-set :user, "rails"
-set :application, "timezone"
+set :user, "caius"
+set :application, "caiustime"
+set :use_sudo, false
 
-server "titus.vm.caius.name", :app, :web
+server "nonus.vm.caius.name", :app, :web
 
 # Target directory for the application on the web and app servers.
 set(:deploy_to) { File.join("", "home", user, "apps", application) }
@@ -13,6 +14,10 @@ set(:deploy_to) { File.join("", "home", user, "apps", application) }
 set :repository, "."
 set :scm, :none
 set :deploy_via, :copy
+
+default_run_options[:pty] = true
+
+after "deploy:create_symlink", "deploy:bundle_install", "deploy:link_cache_dir"
 
 namespace :deploy do
   desc "touch restart.txt to restart the app"
@@ -38,15 +43,19 @@ namespace :deploy do
     CMD
   end
 
-  task :install_gems do
-    ["sinatra", "activesupport", "nokogiri"].each do |gem_name|
-      run <<-CMD
-        gem spec #{gem_name} --version '>= 0' 2>/dev/null|egrep -q '^name:' ||
-        sudo -p 'sudo password: ' gem install --no-user-install --no-ri --no-rdoc --version '>= 0' #{gem_name}
-      CMD
-    end
+  task :bundle_install do
+    bundle_gemfile = File.join(latest_release, "Gemfile")
+    bundle_dir = File.join(shared_path, "bundle")
+    vendor_dir = File.join(latest_release, "vendor")
+
+    install_cmd = %{( bundle install --gemfile #{bundle_gemfile} --path #{bundle_dir} --deployment --without development test && ln -sf #{bundle_dir} #{vendor_dir})}
+    run "if [ -e #{bundle_gemfile} ] ; then #{install_cmd} ; else true ; fi"
   end
 
-  before "deploy", "deploy:install_gems"
-
+  task :link_cache_dir do
+    run <<-CMD
+      mkdir -p #{shared_path}/cache &&
+      ln -sf #{shared_path}/cache #{latest_release}/cache
+    CMD
+  end
 end
