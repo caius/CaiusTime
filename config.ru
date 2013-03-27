@@ -1,5 +1,6 @@
 #!/usr/bin/env rackup
 $:.unshift File.dirname(__FILE__) + "/lib"
+require "bundler/setup"
 require "timezone"
 
 set :run, false
