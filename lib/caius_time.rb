@@ -66,7 +66,8 @@ class CaiusTime
   def tweet_time
     cached_tweet_time || fetch_tweet_time
   rescue Exception => e #Timeout::Error
-    p "Error: #{e.message}"
+    p "Error: #{e.inspect}"
+    p e.backtrace
     nil
   end
 
