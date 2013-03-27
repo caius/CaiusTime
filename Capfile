@@ -11,10 +11,11 @@ server "nonus.vm.caius.name", :app, :web
 set(:deploy_to) { File.join("", "home", user, "apps", application) }
 
 # Copy it up by hand
-set :repository, "."
-set :scm, :none
-set :deploy_via, :copy
-
+set :repository, "git://github.com/caius/CaiusTime"
+set :scm, :git
+set :deploy_via, :remote_cache
+set :branch, "master"
+ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 
 after "deploy:create_symlink", "deploy:bundle_install", "deploy:link_cache_dir"
