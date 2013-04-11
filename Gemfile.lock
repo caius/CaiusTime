@@ -18,6 +18,7 @@ GEM
     net-ssh (2.6.6)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    newrelic_rpm (3.6.0.78)
     nokogiri (1.5.9)
     rack (1.5.2)
     rack-protection (1.5.0)
@@ -36,6 +37,7 @@ PLATFORMS
 DEPENDENCIES
   active_support
   capistrano
+  newrelic_rpm
   nokogiri
   rack (= 1.5.2)
   shotgun
