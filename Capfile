@@ -18,7 +18,7 @@ set :branch, "master"
 ssh_options[:forward_agent] = true
 default_run_options[:pty] = true
 
-after "deploy:create_symlink", "deploy:bundle_install", "deploy:link_cache_dir"
+after "deploy:create_symlink", "deploy:bundle_install", "deploy:link_cache_dir", "deploy:link_new_relic"
 
 namespace :deploy do
   desc "touch restart.txt to restart the app"
@@ -58,6 +58,13 @@ namespace :deploy do
       rm -rf #{shared_path}/cache &&
       mkdir -p #{shared_path}/cache &&
       ln -sf #{shared_path}/cache #{latest_release}/cache
+    CMD
+  end
+
+  task :link_new_relic do
+    run <<-CMD
+      rm -rf "#{latest_release}/config/newrelic.yml" &&
+      ln -sf "#{shared_path}/config/newrelic.yml" "#{latest_release}/config/newrelic.yml"
     CMD
   end
 end
